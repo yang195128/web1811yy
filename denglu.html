@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="css/denglu.css">
+	<title></title>
+</head>
+<body>
+<div class="header">
+	<a href="##"><img  src="img/logo2.png" alt=""></a>
+	<div class="miniheader_right">
+        <span class="right_span">
+            <i></i>天天低价
+        </span>
+        <span class="right_span">
+            <i></i>正品保障
+        </span>
+        <span class="right_span">
+            <i></i>15天退换货
+        </span>
+        <span class="right_span">
+            <i></i>评价晒单有礼
+        </span>
+    </div>
+</div>
+<a href="##" class=".login_new_bg"><img class="imgs" src="img/da.jpg" alt=""></a>
+<div class="loginwarpper">
+	<div class="login" style="background-image: none;">
+       <div class="loginRightSecond" >
+			<!-- tab切换 -->
+			<div class="login_new_tabhead" id="nav" >
+				<span class="account active">账号登录</span>
+				<span id="borderleft">扫码登录</span>
+			</div>
+			<div id="container">
+				 <section class="tab" style="">
+				 	<!-- 账号登陆 -->
+			<span style="color: red;" id="errorMessage"></span>
+			<input id="txtUsername" class="input1" type="text" placeholder=" 已验证手机/邮箱/用户名"><br>
+			<input id="userpass" class="input2" type="password" placeholder=" 密码"><br>
+			<input id="btnLogin" class="input3" type="button" value="登录">
+			<a class="wjmm" href="##">忘记密码?</a>
+			</section>
+			<section class="tab" >
+			 	<div class="ma" >
+					<div class="img">
+			            <img class="img1" src="img/ewm.htm"/>
+			            <img class="img2" src="img/ewm2.jpg"/>
+			        </div>
+			        <p>请使用好乐买app扫码登录</p>
+			        <div class="xiazai">
+			        	<a href="##">
+			        		<img src="img/as1.png" alt=""></img> 
+			        	</a>
+			        	下载好乐买app
+			        	<div id="apps">
+			        		<img src="img/app.png" alt="">
+			        	</div>
+			        </div>
+				</div>
+				 	
+			</section>
+			</div>
+			<div class="footer-d">
+				<div class="tubiao">
+					<a href="##"><img src="img/xiao1.jpg" alt=""></a>
+					<a href="##"><img src="img/xiao2.jpg" alt=""></a>
+					<a href="##"><img src="img/xiao3.jpg" alt=""></a>
+					<a href="##"><img src="img/xiao5.jpg" alt=""></a>
+					<a href="##"><img src="img/xiao6.jpg" alt=""></a>
+				</div>
+				<a class="zcyjx" href="##"><img src="img/xiao7.png" alt="">注册有惊喜</a>
+			</div>
+	
+		</div>
+
+    </div>
+</div>
+<div class="minifooter">Copyright © 2007-2019 OkBuy.com All Rights Reserved&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;天津好乐买信息技术有限公司&nbsp;&nbsp;津B2-20140020&nbsp;&nbsp;京公网安备&nbsp;110105006859</div>
+</body>
+</html>
+<script src="../js/jquery-1.8.3.js"></script>   		
+<script type="text/javascript" src="js/cookieTools.js"></script>
+<script type="text/javascript">
+
+function $(str){
+	if(str.charAt(0)=="#"){
+		return document.getElementById(str.substring(1));
+	}else if(str.charAt(0)=="."){
+		return document.getElementsByClassName(str.substring(1));
+	}else{
+		return document.getElementsByTagName(str);
+	}
+}
+
+window.onload = function(){
+$("#btnLogin").onclick = function(){
+		//1、创建对象
+		let xhr =new XMLHttpRequest();
+
+		//2、设置请求参数
+		xhr.open("post","php/loginCheck03.php",true);
+
+		xhr.onreadystatechange = function(){
+			if(xhr.readyState==4 && xhr.status==200){
+				if(xhr.responseText=="1"){
+					//保存cookie
+					addCookie("username",$("#txtUsername").value,7);
+					location.href="index.html";
+				}else{
+					$("#errorMessage").innerHTML="用户名密码错误！";
+					$("#errorMessage").style.display="block";
+				}
+			}
+		}
+		xhr.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		
+		let str = `username=${$("#txtUsername").value}&userpass=${$("#userpass").value}`;
+		xhr.send(str);
+	}
+
+// 选项卡
+//获取 li 也就是选项卡选项tab
+ var nav=document.getElementById('nav');
+ var oNav=nav.getElementsByTagName('span');
+ //获取 包裹在container里面的section（内容）
+ var container=document.getElementById('container');
+ var oDiv=container.getElementsByClassName('tab');
+ //使用 循环依次得到li 
+ for(var i=0;i<oNav.length;i++){
+  oNav[i].index=i;
+ //每一次得到li后执行鼠标点击操作则触发函数function  
+  oNav[i].onclick=function () { //此处除了可以使用onclick，还可以使用onmouseover
+ //在li的个数内依次展示内容  
+  for(var i=0;i<oNav.length;i++){
+   oNav[i].className='';
+   oDiv[i].style.display="none";
+  }
+  this.className='act';
+  oDiv[this.index].style.display="block"
+  }
+  for(var m=1;m<oNav.length;m++){
+   oNav[m].className='';
+   oDiv[m].style.display="none";
+  }
+ }
+};
+
+
+</script>
